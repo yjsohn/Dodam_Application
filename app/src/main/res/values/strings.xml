@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">FirebaseLoginApp</string>
+    <string name="action_sign_in_short">Register</string>
+    <string name="email">Email</string>
+    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
+    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_password">Change Password</string>
+    <string name="send_password_reset_email">Send Password reset email</string>
+    <string name="remove_user">Remove user</string>
+    <string name="new_pass">New Password</string>
+    <string name="title_activity_profile">Firebase</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="prompt_password">Please enter your password</string>
+    <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
+    <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_back"><![CDATA[<< Back]]></string>
+    <string name="hint_new_email">New Email</string>
+    <string name="btn_change">Change</string>
+    <string name="btn_send">Send</string>
+    <string name="btn_remove">Remove</string>
+    <string name="btn_sign_out">Sign Out</string>
+    <string name="lbl_forgot_password">Forgot password?</string>
+    <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
+    <string name="email_id">Email ID</string>
+
+    <string name="hintEmail">이메일</string>
+    <string name="hintPassword">비밀번호</string>
+    <string name="hintHeight">엄마 키(cm)</string>
+    <string name="hintWeight">엄마 몸무게(kg)</string>
+
+    <string name="buttonLogin">로그인</string>
+    <string name="buttonFindPw">비밀번호 찾기</string>
+    <string name="buttonSignUp">회원가입</string>
+    <string name="buttonFinishSignUp">회원가입 완료</string>
+    <string name="buttonAlreadyRegistered">로그인하기</string>
+    <string name="buttonSendResetEmail">초기화 메일 발송</string>
+    <string name="buttonFindMom">엄마찾기</string>
+
+    <string name="textForgotPW">비밀번호 초기화하기</string>
+    <string name="textResetMsg">등록하실 때 기입한 이메일로\n비밀번호를 초기화할 수 있는 링크를 보내드리겠습니다.\n이메일을 적어주세요.</string>
+    <string name="textImMom">나는 엄마</string>
+    <string name="textImDad">나는 아빠</string>
+    <string name="textSetting">맞춤설정</string>
+    <string name="textBabyName">태아명을 입력해주세요</string>
+    <string name="textBabyGender">아이 성별</string>
+    <string name="textBoy">아들</string>
+    <string name="textGirl">딸</string>
+    <string name="textUnknown">미정</string>
+    <string name="textBabyBirth">출산예정일</string>
+    <string name="textAboutMom">엄마에 대하여</string>
+    <string name="textAboutBaby">아기에 대하여</string>
+
+    <string name="title_activity_test">TestActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
