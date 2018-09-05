@@ -43,7 +43,6 @@ public class SignupActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
-
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -83,13 +82,13 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //getting registered Date
                 Calendar calendar = Calendar.getInstance();
                 final String registerDate = DateFormat.getDateInstance().format(calendar.getTime());
                 final String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                final String password = inputPassword.getText().toString().trim();
                 final String textMomHeight = momHeight.getText().toString().trim();
                 final String textMomWeight = momWeight.getText().toString().trim();
+
 
                 if(btnMom.isChecked()){
                     if(TextUtils.isEmpty(textMomHeight) || TextUtils.isEmpty(textMomWeight)){
@@ -113,17 +112,17 @@ public class SignupActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                DatabaseReference Setting = mRootRef.child("Setting");
+                                final DatabaseReference user = Setting.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                 if (task.isSuccessful() && btnMom.isChecked()) {
-                                    DatabaseReference Mother = mRootRef.child("Mother");
-                                    DatabaseReference momUser = Mother.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    DatabaseReference Setting = momUser.child("Setting");
-                                    mUser user = new mUser(
+                                    mUser muser = new mUser(
                                             registerDate,
                                             email,
                                             textMomHeight,
                                             textMomWeight
                                     );
-                                    Setting.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                    user.setValue(muser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
@@ -139,14 +138,12 @@ public class SignupActivity extends AppCompatActivity {
                                     });
                                 }
                                 else if (task.isSuccessful() && btnDad.isChecked()){
-                                    DatabaseReference Father = mRootRef.child("Father");
-                                    DatabaseReference dadUser = Father.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    DatabaseReference Setting = dadUser.child("Setting");
-                                    dUser user = new dUser(
+                                    dUser duser = new dUser(
                                             registerDate,
                                             email
                                     );
-                                    Setting.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                    user.setValue(duser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
