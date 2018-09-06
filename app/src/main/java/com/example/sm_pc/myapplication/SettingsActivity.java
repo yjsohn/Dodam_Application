@@ -2,30 +2,34 @@ package com.example.sm_pc.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.example.sm_pc.myapplication.account.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private Button signOut, dateButton, saveButton;
+    private Button dateButton, saveButton;
     private RadioButton boyButton, girlButton, undecidedButton;
-    private TextView showEmail, ddayText, babyName;
+    private TextView ddayText, babyName;
+    private ListView listView;
+    private String userID;
 
     private int tYear, tMonth, tDay;
     private int dYear = 1, dMonth = 1, dDay = 1;
@@ -37,21 +41,33 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        auth = FirebaseAuth.getInstance();
-        final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
-        signOut = (Button) findViewById(R.id.buttonSignOut);
         dateButton = (Button) findViewById(R.id.dateButton);
         saveButton = (Button) findViewById(R.id.saveButton);
         boyButton = (RadioButton) findViewById(R.id.buttonBoy);
         girlButton = (RadioButton) findViewById(R.id.buttonGirl);
         undecidedButton = (RadioButton) findViewById(R.id.buttonUndecided);
-        showEmail = (TextView) findViewById(R.id.showEmail);
         ddayText = (TextView) findViewById(R.id.ddaydate);
         babyName = (TextView) findViewById(R.id.textBabyName);
+        listView = (ListView) findViewById(R.id.listView);
 
-        //get current user
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        auth = FirebaseAuth.getInstance();
+        final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = currentUser.getUid();
+        //????//
+        DatabaseReference Setting = mRootRef.child("Setting");
+
+        Setting.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,21 +86,10 @@ public class SettingsActivity extends AppCompatActivity {
                 DatabaseReference gender = user.child("gender");
                 if(boyButton.isChecked()){gender.setValue(genderB);}
                 else if(girlButton.isChecked()){gender.setValue(genderG);}
-                else{gender.setValue(genderU);}
+                else if(undecidedButton.isChecked()){gender.setValue(genderU);}
             }
         });
 
-
-
-        setDataToView(user);
-
-
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
 
         dateButton.setOnClickListener(new View.OnClickListener() {
 
@@ -106,35 +111,16 @@ public class SettingsActivity extends AppCompatActivity {
         updateDisplay();
     }
 
-    public void signOut() {
-        auth.signOut();
-        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
-                    finish();
-                }
-            }
-        };
-    }
+    private void showData(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
 
-    private void setDataToView(FirebaseUser user) {
-
-        showEmail.setText(user.getEmail());
-
+        }
     }
 
 
     private void updateDisplay() {
-        if(dYear == 1){
-            ddayText.setText("출산예정일");
-        }else{
-            ddayText.setText(String.format("%d년 %d월 %d일", dYear, dMonth + 1, dDay));
-        }
+        if(dYear == 1){ ddayText.setText("출산예정일");}
+        else{ ddayText.setText(String.format("%d년 %d월 %d일", dYear, dMonth + 1, dDay));}
     }
 
     private DatePickerDialog.OnDateSetListener dDateSetListener = new DatePickerDialog.OnDateSetListener() {
